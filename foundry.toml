@@ -3,9 +3,14 @@ src = "src"
 out = "out"
 libs = ["lib"]
 
+remappings = [
+  '@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/',
+]
+
 [rpc_endpoints]
 sepolia-eth = "https://eth-sepolia.g.alchemy.com/v2/tGkNNhJhsioGdTN--QOqujh_sd0I92WZ"  
-arb-sepolia = "https://arb-sepolia.g.alchemy.com/v2/HV0fITnHv7f-Xzy5MjxnGpSpNPn8IA4I"
+arb-sepolia = "https://api.avax-test.network/ext/bc/C/rpc"
+
 
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
