@@ -147,7 +147,8 @@ contract CustomERC20Token is ERC20, VRFConsumerBaseV2Plus {
     /**
      * @dev Calculate payout based on random number
      * The gambling logic:
-     * - 0-4999 (50%): Player loses everything (0x multiplier)
+     * - 0-2499 (25%): Player loses everything (0x multiplier)
+     * - 2500-4999 (25%): Player gets his tokens back (1x multiplier)
      * - 5000-7999 (30%): Player gets 1.5x their bet
      * - 8000-9499 (15%): Player gets 3x their bet
      * - 9500-9899 (4%): Player gets 10x their bet
@@ -156,8 +157,10 @@ contract CustomERC20Token is ERC20, VRFConsumerBaseV2Plus {
     function calculatePayout(uint256 betAmount, uint256 randomNumber) internal pure returns (uint256) {
         uint256 roll = randomNumber % 10000; // Convert to 0-9999 range
 
-        if (roll < 5000) {
+        if (roll < 2500) {
             return 0; // Player loses
+        } else if (roll < 5000) {
+            return betAmount; // 1x multiplier (player gets their bet back)
         } else if (roll < 8000) {
             return (betAmount * 15) / 10; // 1.5x multiplier
         } else if (roll < 9500) {
